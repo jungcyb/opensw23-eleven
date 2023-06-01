@@ -3,7 +3,7 @@
                batch_size: 1                             
           checkpoints_dir: ./checkpoints                 
                 crop_size: 256                           
-                 dataroot: ./datasets/eleven-test        	[default: None]
+                 dataroot: pytorch-CycleGAN-and-pix2pix-master/datasets/elevenTest	[default: None]
              dataset_mode: aligned                       
                 direction: BtoA                          	[default: AtoB]
           display_winsize: 256                           
