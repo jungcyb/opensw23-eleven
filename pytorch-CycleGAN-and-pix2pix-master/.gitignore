@@ -45,3 +45,6 @@ test/data/legacy_serialized.pt
 
 #Ignore Wandb
 wandb/
+
+#Ignore data set
+checkpoints/edges2shoes_pretrained/latest_net_G.pth
