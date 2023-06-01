@@ -3,7 +3,6 @@ debug*
 datasets/*
 !datasets/elevenTest
 
-checkpoints/
 results/edges2shoes_pretrained/test_latest/index.html
 
 build/
