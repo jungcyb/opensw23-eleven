@@ -44,6 +44,12 @@
 
 > modules : defined at ```./pytorch-CycleGAN-and-pix2pix-master/requirements.txt```
 
+목표 디렉토리내에서 아래 커맨드를 실행합니다.
+```
+git clone https://github.com/jungcyb/opensw23-eleven.git
+cd opensw23-eleven
+```
+
 ## 2.Module Installation
 run the following command
 
