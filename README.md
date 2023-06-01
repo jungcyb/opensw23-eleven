@@ -20,5 +20,7 @@
 # Analysis/Visualization
 
 # Installation
+  ## Overview
+  ![FlowChart](./Resources/img/pix2pixChart.jpg)
 
 # Presentation
