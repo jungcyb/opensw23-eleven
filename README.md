@@ -17,6 +17,11 @@
 # Topic Introduction
 > __Edges to Photo__
 - pytorch의 pix2pix모델을 사용하여 선화로 이루어진 신발 이미지를 실제 신발 이미지로 변환한다.
+- 사용자가 그림을 그린 직후 바로 실사화해 결과를 보여주는 어플리케이션 제작을 목표로 한다.
+> 프로젝트 결과 분석
+- 사용자가 선화로 따라 그린 실제 그림과의 색과 형태 면에서 얼마나 차이나는가
+- 유의미한 실사화가 일어나려면 어느 정도 수준의 선화를 제공해야하는가 (단순 아웃라인 부터 세부 묘사까지 테스트)
+
 > Code Source
 - [Project Repository](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix)
 - [Information](https://phillipi.github.io/pix2pix/)
