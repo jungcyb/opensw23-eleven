@@ -30,9 +30,8 @@ def upload():
     return redirect(url_for('show_image', filename=filename))
 
 
-
 def modelRun():
-    os.system("python ../pytorch-CycleGAN-and-pix2pix-master/test.py --dataroot datasets/elevenTest --model test --netG unet_256 --direction BtoA --dataset_mode single --norm batch --name edges2shoes_pretrained")
+    os.system("python ..\\pytorch-CycleGAN-and-pix2pix-master\\test.py --dataroot datasets/elevenTest --model test --netG unet_256 --direction BtoA --dataset_mode single --norm batch --name edges2shoes_pretrained --gpu_ids -1")
     return 
 
 # 저장된 이미지를 보여주는 엔드포인트
@@ -42,6 +41,12 @@ def show_image(filename):
     filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
     return render_template('index.html', filename=filename)
 
+
+@app.route('/image/<filename>/convert')
+def show_convert_image(filename):
+    
+    filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
+    return render_template('index.html', filename=filename)
 
 if __name__ == '__main__':
     # uploads 디렉토리 생성
