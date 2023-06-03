@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import random
 import string
+import sys
+
 
 app = Flask(__name__)
 
@@ -13,21 +15,31 @@ def index():
 # 이미지를 업로드하고 저장하는 엔드포인트
 @app.route('/upload', methods=['POST'])
 def upload():
+        # 임의의 파일 이름 생성
     file = request.files['image']  # 업로드된 파일 가져오기
-
-    # 임의의 파일 이름 생성
     filename = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)) + '.jpg'
 
-    # Flask 는 static 안에 파일만 인식 가능
+    #static/img 안에 저장
     file.save(os.path.join('static/img', filename))
+
+    #테스트 파일 안의 이미지 폴더에 저장
+    file.save(os.path.join('../pytorch-CycleGAN-and-pix2pix-master/datasets//elevenTest/test/', filename))
 #   file.save(os.path.join('uploads', filename))
 
+    modelRun()
     return redirect(url_for('show_image', filename=filename))
+
+
+
+def modelRun():
+    os.system("python ../pytorch-CycleGAN-and-pix2pix-master/test.py --dataroot datasets/elevenTest --model test --netG unet_256 --direction BtoA --dataset_mode single --norm batch --name edges2shoes_pretrained")
+    return 
 
 # 저장된 이미지를 보여주는 엔드포인트
 @app.route('/image/<filename>')
 def show_image(filename):
-    filename = 'img/'+filename
+    
+    filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
     return render_template('index.html', filename=filename)
 
 
@@ -36,4 +48,4 @@ if __name__ == '__main__':
     os.makedirs('uploads', exist_ok=True)
     
     # 서버 실행
-    app.run()
+    app.run(debug=True)

@@ -18,12 +18,12 @@
 		You can upload your own drawings or draw now and test directly
 	</p>
 	<div>
-		<span>Upload Area</span>
+		<span>Upload Area - Now Developing</span>
 		<form method="POST" action="/upload" enctype="multipart/form-data">
 			<input type="file" name="image">
 			<input type="submit" value="Upload">
 		</form>
-		<img src="{{url_for('static', filename = filename)}}" alt="아직 업로드된 파일이 없습니다.">
+		<img src="{{url_for('static', filename = 'img/'+filename.split("/")[-1] if filename else filename )}}" alt="아직 업로드된 파일이 없습니다.">
 		<button id="convert-upload">Convert</button>
 		<img src="" alt="아직 변환되지 않았습니다.">
 	</div>
