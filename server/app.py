@@ -44,7 +44,6 @@ def show_image(filename):
 
 @app.route('/image/<filename>/convert')
 def show_convert_image(filename):
-    
     filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
     return render_template('index.html', filename=filename)
 
