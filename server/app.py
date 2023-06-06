@@ -6,6 +6,7 @@ import sys
 import shutil
 
 
+
 app = Flask(__name__)
 
 # 파일 업로드를 위한 HTML 템플릿
@@ -25,7 +26,7 @@ def upload():
     print(cdir)
     if cdir == 'opensw23-eleven':
         ()
-    elif cdir == 'server':
+    elif cdir == 'server' or cdir == 'pytorch_CycleGAN-and-pix2pix-master':
         os.chdir('..')
     else:
         os.chdir('opensw23-eleven')
@@ -48,6 +49,13 @@ def modelRun(filename):
     shutil.copy('results/edges2shoes_pretrained/test_latest/images/'+filename+'_fake.png', '../server/static/img/result/')
     return 
 
+@app.route('/convert', methods = ['POST'])
+def convert():
+    file = request.files[filename]
+    
+#    return url_for('show_convert_image')
+    return redirect(url_for('show_convert_image'))
+
 # 저장된 이미지를 보여주는 엔드포인트
 @app.route('/image/<filename>')
 def show_image(filename):
@@ -57,7 +65,8 @@ def show_image(filename):
 
 @app.route('/image/<filename>/convert')
 def show_convert_image(filename):
-    filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
+#    filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
+    filename = 'server/static/img/result'+filename.split('.'[0])+'_fake.png'
     return render_template('index.html', filename=filename)
 
 if __name__ == '__main__':
