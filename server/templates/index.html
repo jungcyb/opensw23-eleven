@@ -25,7 +25,7 @@
 		</form>
 		<img src="{{url_for('static', filename = 'img/'+filename.split('/')[-1] if filename else filename )}}" alt="아직 업로드된 파일이 없습니다.">
 		<form method="POST" action="/convert" enctype="multipart/form-data">
-			<button id="convert-upload">Convert</button>
+			<button type ="button" onclick="alert('123')"id="convert-upload">Convert</button>
 		</form>
 		<img src="" alt="아직 변환되지 않았습니다.">
 	</div>
