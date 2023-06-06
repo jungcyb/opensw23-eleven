@@ -1,12 +1,3 @@
-import {
-	moveHandler,
-	downHandler,
-	upHandler,
-	setCanvas,
-	reset,
-	captureHandler
-} from "./draw.js";
-
 $(document).ready(() => {
 	const canvas = document.getElementById("mycanvas");
 	const ctx = canvas.getContext("2d");
