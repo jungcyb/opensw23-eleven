@@ -4,6 +4,7 @@ import random
 import string
 import sys
 import shutil
+import base64
 
 
 
@@ -26,18 +27,55 @@ def upload():
     print(cdir)
     if cdir == 'opensw23-eleven':
         ()
-    elif cdir == 'server' or cdir == 'pytorch_CycleGAN-and-pix2pix-master':
+    elif cdir == 'server' or cdir == 'pytorch-CycleGAN-and-pix2pix-master':
         os.chdir('..')
     else:
         os.chdir('opensw23-eleven')
     # static/img 안에 저장
-    file.save(os.path.join('server/static/img', filename))
+    file.save(os.path.join('server/static/img/upload_img', filename))
     # test 파일 안 이미지 폴더에 저장
     shutil.copy('server/static/img/' + filename, 'pytorch-CycleGAN-and-pix2pix-master/datasets/elevenTest/test')
 
     modelRun(filename)
     return redirect(url_for('show_image', filename=filename))
 
+# upload for drawing image
+@app.route('/upload2', methods=['POST'])
+def upload2():
+    image_data_url = request.json['image_data']
+#    image_data.save(os.path.join('static', '1'))
+    # 이미지 데이터를 처리하는 로직 추가
+    # ...
+    
+    # 데이터 URL에서 base64 인코딩된 이미지 부분 추출
+    _, encoded_image = image_data_url.split(',', 1)
+
+    # 패딩 확인 및 필요한 패딩 추가
+    padding = len(encoded_image) % 4
+    if padding > 0:
+        encoded_image += '=' * (4 - padding)
+
+    try:
+        # 이미지 데이터 디코딩
+        image_data = base64.b64decode(encoded_image)
+
+        # 이미지 파일로 저장
+        filename = 'server/static/img/drawing_img/image.png'
+        with open(filename, 'wb') as file:
+            file.write(image_data)
+
+        print('이미지 저장 성공')
+
+        # 저장된 이미지 파일 경로 응답으로 전송
+        image_path = os.path.abspath(filename)
+        return {'imagePath': image_path}
+
+    except base64.binascii.Error as e:
+        print('이미지 저장 실패:', e)
+        return {'error': '이미지 저장 실패'}
+    
+        
+    return '이미지 데이터가 성공적으로 전송되었습니다.'
 
 def modelRun(filename):
     filename = filename.split('.')[0]

@@ -36,7 +36,7 @@ const reset = (event) => {
 	ctx.clearRect(0, 0, 256, 256);
 };
 
-const captureHandler = (evnet) => {
+const captureHandler = (event) => {
 	const img = document.getElementById('mycanvas').toDataURL('image/png');
 	console.log(img);
 };

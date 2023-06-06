@@ -33,11 +33,32 @@
 	<div>
 		<span>Drawing Area</span>
 		<button id="reset">Reset</button>
-		<canvas width="256" height="256" id="mycanvas">
-		</canvas>
-		<form method="POST" action="/drawing_convert" enctype="multipart/form-data">
-			<button id="convert-draw" name="drawing" type='submit'>Convert</button>
-		</form>
+		<canvas width="256" height="256" id="mycanvas"></canvas>
+		<button id="upload-button" name="drawing" type="submit">Convert</button>
+		
+		<script>
+			var canvas = document.getElementById('mycanvas');
+			var context = canvas.getContext('2d');
+		
+			document.getElementById('upload-button').addEventListener('click', function() {
+			  var imageData = canvas.toDataURL();
+		
+			  fetch('/upload2', {
+				method: 'POST',
+				headers: {
+				  'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ image_data: imageData })
+			  })
+			  .then(response => {
+				console.log('전송 성공');
+			  })
+			  .catch(error => {
+				console.error('전송 오류:', error);
+			  });
+			});
+		  </script>
+
 		<img src="" alt="아직 변환되지 않았습니다.">
 	</div>
 </body>
