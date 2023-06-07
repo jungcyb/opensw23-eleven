@@ -1,0 +1,30 @@
+chatgpt로 복사하고 수정 여러번 한거라 주석이나 코드 위치가 뒤죽박죽이라 가독성이 많이 낮아요
+너무 피곤해서 변수명도 막썻네요
+양해 부탁드려요 ... 
+
+파일 선택 -> 업로드 -> Upload Area Convert
+Drawing -> Drawing Area Convert ( 파일 저장은 되는데 출력이 안됨 )
+
+
+index.html
+
+uploadImage(): 업로드한 파일 화면에 출력
+	upload 버튼을 누르면 실행되고 업로드한 파일을 화면에 출력함
+
+sendImageToServer(): 서버에 원본 파일을 보내고 서버에서 변환된 이미지를 받아 출력함
+	upload된 사진파일을 server에 base64 형식으로된 string 으로 전달함. /upload ['POST']
+	/get_image ['GET'] 으로 서버에서  변환된 이미지를 받아 <img id="convertedDrawing">에 출력
+
+<!-- Upload Drawing & Convert -->: 이 부분이 클라이언트가 캔버스에 그린 부분을 서버로 보낸 뒤에, 변환된 이미지를 받아서 출력하는 부분인데 오류가 몇개 있어요
+ canvas.toDataURL() 해서 서버에 보내서 이미지 변환 후에 test.py 돌리면 image_real 이 검게 되더라구요 <- 이거 수정해야되고
+진짜로 다른 파일에서는 html에 그림그린거 변환된거 출력 나왔는데 app.py로 돌리니까 client -> server 는 되고 파일도 정상적으로 저장 되는데 client 에 출력이 안되네요../
+출력되는 부분은
+	<img id="convertedDrawing" alt="아직 변환되지 않았습니다." src ="">
+	var convertDrawing = document.getElementById('convertedDrawing')
+		const drwURL = URL.createObjectURL(blob);
+		convertDrawing.src = drwURL;
+
+
+수정할거
+	- client 측에 drawing_convert 출력하기
+	- 파일 업로드 없이 Drawing 한 다음에 Upload Area Convert 를 하면 출력부분에 Drawing_convert 가 출력됨.

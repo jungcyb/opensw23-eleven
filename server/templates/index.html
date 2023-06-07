@@ -33,11 +33,50 @@
 	<div>
 		<span>Drawing Area</span>
 		<button id="reset">Reset</button>
-		<canvas width="256" height="256" id="mycanvas">
-		</canvas>
-		<button id="convertDraw">Convert</button>
-		<img src="" alt="아직 변환되지 않았습니다.">
+		<canvas width="256" height="256" id="mycanvas"></canvas>
+		<button id="convertDraw" name="drawing" type="submit">Convert</button>
+		<img id="convertedDrawing" alt="아직 변환되지 않았습니다." src ="">
 	</div>
+	
+	<!-- Upload Drawing & Convert -->
+	<script>
+		var canvas = document.getElementById('mycanvas');
+		var context = canvas.getContext('2d');
+		context.fillStyle = "#FFFFFF"
+		context.fillRect(0,0,canvs.width,canvas.height)
+		var convertDrawing = document.getElementById('convertedDrawing')
+
+		document.getElementById('convertDraw').addEventListener('click', function() {
+			var imageData = canvas.toDataURL();
+		
+
+			fetch('/upload2', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ image_data: imageData })
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log('서버 응답:', data);
+
+				fetch('/get_drawing')
+					.then(response => response.blob())
+					.then(blob => {
+						const drwURL = URL.createObjectURL(blob);
+						convertDrawing.src = drwURL;
+					})
+					.catch(error =>{
+						console.error('error', error)
+					})
+					
+			})
+			.catch(error => {
+				console.error('전송 오류:', error);
+			});
+		});
+	</script>
 
 	<!-- UPLOAD -->
 	<script>
@@ -93,7 +132,7 @@
 						const imgURL = URL.createObjectURL(blob);
 						// 이미지를 화면에 표시
 						convertImage.src = imgURL;
-					  })
+					})
 					.catch(error =>{
 						console.error('error', error)
 					})
