@@ -1,83 +1,68 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
+from PIL import Image
 import os
+import io
 import random
 import string
 import sys
 import shutil
 import base64
 
-
-
 app = Flask(__name__)
 
-# 파일 업로드를 위한 HTML 템플릿
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('sub.html')
 
-# 이미지를 업로드하고 저장하는 엔드포인트
+
 @app.route('/upload', methods=['POST'])
 def upload():
-        # 임의의 파일 이름 생성
-    file = request.files['image']  # 업로드된 파일 가져오기
-    filename = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)) + '.png'
-
     cdir = os.getcwd().split('\\')[-1]
-    print(os.getcwd())
-    print(cdir)
     if cdir == 'opensw23-eleven':
         ()
     elif cdir == 'server' or cdir == 'pytorch-CycleGAN-and-pix2pix-master':
         os.chdir('..')
     else:
         os.chdir('opensw23-eleven')
-    # static/img 안에 저장
-    file.save(os.path.join('server/static/img/upload_img', filename))
-    # test 파일 안 이미지 폴더에 저장
-    shutil.copy('server/static/img/' + filename, 'pytorch-CycleGAN-and-pix2pix-master/datasets/elevenTest/test')
-
+        
+    image_data = request.form['imageData']
+    # 이미지 데이터를 디코딩하고 파일로 저장
+    
+    save_image(image_data, filename=filename)
     modelRun(filename)
+    
+    return jsonify({'success':True})
     return redirect(url_for('show_image', filename=filename))
 
-# upload for drawing image
-@app.route('/upload2', methods=['POST'])
-def upload2():
-    image_data_url = request.json['image_data']
-#    image_data.save(os.path.join('static', '1'))
-    # 이미지 데이터를 처리하는 로직 추가
-    # ...
+@app.route('/get_image', methods=['GET'])
+def get_image():
+    image_file_path = 'static/img/result/'+filename_fake
+    return send_file(image_file_path, mimetype='image/jpeg')
+
+@app.route('/upload/<filename>')
+def show_image(filename):
+    print(filename)
+    origin_file = filename
+    convert_file = '/static/img/result/'+filename
+    print(filename)
+    return render_template('sub.html', origin_file=origin_file, convert_file=convert_file)
+#    return redirect(url_for('show', filename=filename))
     
-    # 데이터 URL에서 base64 인코딩된 이미지 부분 추출
-    _, encoded_image = image_data_url.split(',', 1)
 
-    # 패딩 확인 및 필요한 패딩 추가
-    padding = len(encoded_image) % 4
-    if padding > 0:
-        encoded_image += '=' * (4 - padding)
-
-    try:
-        # 이미지 데이터 디코딩
-        image_data = base64.b64decode(encoded_image)
-
-        # 이미지 파일로 저장
-        filename = 'server/static/img/drawing_img/image.png'
-        with open(filename, 'wb') as file:
-            file.write(image_data)
-
-        print('이미지 저장 성공')
-
-        # 저장된 이미지 파일 경로 응답으로 전송
-        image_path = os.path.abspath(filename)
-        return {'imagePath': image_path}
-
-    except base64.binascii.Error as e:
-        print('이미지 저장 실패:', e)
-        return {'error': '이미지 저장 실패'}
+def save_image(image_data, filename):
+    # 이미지 데이터를 디코딩
+    image_data = base64.urlsafe_b64decode(image_data.split(',')[1])
     
-        
-    return '이미지 데이터가 성공적으로 전송되었습니다.'
+    # 이미지 파일로 저장
+    file_path = 'server/static/img/upload_img/'+filename
+    with open(file_path, 'wb') as f:
+        f.write(image_data)
+    shutil.copy('server/static/img/upload_img/' + filename, 'pytorch-CycleGAN-and-pix2pix-master/datasets/elevenTest/test')
+
+    return
 
 def modelRun(filename):
+    print("1")
     filename = filename.split('.')[0]
     # directory 위치 변경
     os.chdir("pytorch-CycleGAN-and-pix2pix-master")
@@ -86,30 +71,10 @@ def modelRun(filename):
     # static/img/result 에 저장
     shutil.copy('results/edges2shoes_pretrained/test_latest/images/'+filename+'_fake.png', '../server/static/img/result/')
     return 
-
-@app.route('/convert', methods = ['POST'])
-def convert():
-    file = request.files[filename]
     
-#    return url_for('show_convert_image')
-    return redirect(url_for('show_convert_image'))
-
-# 저장된 이미지를 보여주는 엔드포인트
-@app.route('/image/<filename>')
-def show_image(filename):
-    filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
-    return render_template('index.html', filename=filename)
-
-
-@app.route('/image/<filename>/convert')
-def show_convert_image(filename):
-#    filename = '../pytorch-CycleGAN-and-pix2pix-master/result/edges2shoes_pretrained/test_latest/images/'+filename
-    filename = 'server/static/img/result'+filename.split('.'[0])+'_fake.png'
-    return render_template('index.html', filename=filename)
 
 if __name__ == '__main__':
-    # uploads 디렉토리 생성
-    os.makedirs('uploads', exist_ok=True)
-    
     # 서버 실행
-    app.run(debug=True)
+    filename = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)) + '.png'
+    filename_fake = filename.split('.')[0]+'_fake.png'
+    app.run(debug=True,host='0.0.0.0',port='1010')

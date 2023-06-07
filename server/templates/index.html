@@ -12,54 +12,96 @@
 </head>
 <body>
 	<h1>Edges 2 Shoes</h1>
-	<p>
-		This page is for testing edges2shoes model with the drawing 
+		<p>
+			This page is for testing edges2shoes model with the drawing 
 	</p>
 	<p>
 		You can upload your own drawings or draw now and test directly
 	</p>
 	<div>
-		<span>Upload Area - Now Developing</span>
-		<form method="POST" action="/upload" enctype="multipart/form-data">
-			<input type="file" name="image">
-			<input type="submit" value="Upload">
+		<span>Upload Area</span>
+		<form method="POST" enctype="multipart/form-data">
+			<input type="file" name="image" id="imageInput">
+			<button type="button" onclick="uploadImage()">업로드</button>
 		</form>
-		<img src="{{url_for('static', filename = 'img/'+filename.split('/')[-1] if filename else filename )}}" alt="아직 업로드된 파일이 없습니다.">
-		<form method="POST" action="/convert" enctype="multipart/form-data">
-			<input type="submit" value='Convert' name= filename />
-		</form>
-		<img src="{{url_for('static', filename = 'img/'+filename.split('/')[-1] if filename else filename )}}" alt="아직 변환되지 않았습니다.">
+		<!-- upload 버튼을 누르면 동적으로 이미지가 출력됨 -->
+		<img id="uploadedImage" src="" alt="Uploaded Image">
+		
+		<button id="convert-upload" onclick="sendImageToServer()">Convert</button>
+		<img src="" alt="아직 변환되지 않았습니다." id="convertedResult">
 	</div>
 	<div>
 		<span>Drawing Area</span>
 		<button id="reset">Reset</button>
-		<canvas width="256" height="256" id="mycanvas"></canvas>
-		<button id="upload-button" name="drawing" type="submit">Convert</button>
-		
-		<script>
-			var canvas = document.getElementById('mycanvas');
-			var context = canvas.getContext('2d');
-		
-			document.getElementById('upload-button').addEventListener('click', function() {
-			  var imageData = canvas.toDataURL();
-		
-			  fetch('/upload2', {
-				method: 'POST',
-				headers: {
-				  'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ image_data: imageData })
-			  })
-			  .then(response => {
-				console.log('전송 성공');
-			  })
-			  .catch(error => {
-				console.error('전송 오류:', error);
-			  });
-			});
-		  </script>
-
+		<canvas width="256" height="256" id="mycanvas">
+		</canvas>
+		<button id="convertDraw">Convert</button>
 		<img src="" alt="아직 변환되지 않았습니다.">
 	</div>
+
+	<!-- UPLOAD -->
+	<script>
+        function uploadImage() {
+            var imageInput = document.getElementById('imageInput');
+            var uploadedImage = document.getElementById('uploadedImage');
+
+            // 이미지 파일 선택이 되었는지 확인
+            if (imageInput.files && imageInput.files[0]) {
+                var reader = new FileReader();
+
+                // 파일 읽기가 완료된 후 실행될 콜백 함수
+                reader.onload = function(e) {
+                    uploadedImage.src = e.target.result;
+                };
+
+                // 이미지 파일을 읽기
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        }
+    </script>
+	<!-- UPLOAD CONVERT -->
+	<script>
+        function sendImageToServer() {
+            // 이미지 요소를 가져옴
+            var imgElement = document.getElementById("uploadedImage");
+
+            // 이미지 데이터를 추출
+            var canvas = document.createElement("canvas");
+            canvas.width = 256;
+            canvas.height = 256;
+            var context = canvas.getContext("2d");
+            context.drawImage(imgElement, 0, 0);
+            var imageDataURL = canvas.toDataURL("image/jpeg");
+			var convertImage = document.getElementById('convertedResult')
+
+            // 이미지 데이터를 서버로 전송
+            fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'imageData=' + encodeURIComponent(imageDataURL)
+            })
+            .then(response => response.json())
+			.then(data => {
+				console.log('서버 응답:', data);
+
+				fetch('/get_image')
+					.then(response => response.blob())
+					.then(blob => {
+						// Blob을 이미지로 변환
+						const imgURL = URL.createObjectURL(blob);
+						// 이미지를 화면에 표시
+						convertImage.src = imgURL;
+					  })
+					.catch(error =>{
+						console.error('error', error)
+					})
+			})
+            .catch(function(error) {
+                console.error('이미지 전송 실패:', error);
+            });
+        }
+    </script>
 </body>
 </html>
