@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
 from PIL import Image
+from io import BytesIO
 import os
 import io
 import random
@@ -15,7 +16,7 @@ filename = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)) 
 
 @app.route('/')
 def index():
-    return render_template('sub.html')
+    return render_template('index.html')
 
 # upload for drawing image
 @app.route('/upload2', methods=['POST'])
@@ -41,16 +42,28 @@ def upload2():
     try:
         # 이미지 데이터 디코딩
         image_data = base64.b64decode(encoded_image)
+        image = Image.open(BytesIO(image_data))
+        pixels = image.load()
+        width, height = image.size
+
+        #배경을 하얀색으로 변환
+        for x in range(width):
+            for y in range(height):
+                r, g, b, a = pixels[x, y]
+                if a == 0:
+                    pixels[x, y] = (255, 255, 255, 255)
+        
+        output_image = BytesIO()
+        image.save(output_image, format='PNG')
+        image_data_r = output_image.getvalue()
 
         # 이미지 파일로 저장
-        
         drawing_fake = drawing.split('.')[0]+'_fake.png'
         drawing_path = 'server/static/img/drawing_img/'+drawing
         
         
-        
         with open(drawing_path, 'wb') as file:
-            file.write(image_data)
+            file.write(image_data_r)
         shutil.copy('server/static/img/drawing_img/' + drawing, 'pytorch-CycleGAN-and-pix2pix-master/datasets/elevenTest/test')
         print('이미지 저장 성공')
 
@@ -71,6 +84,7 @@ def upload2():
 # 이거 왜 안되는지 모르겠네여
 @app.route('/get_drawing', methods=['GET'])
 def get_drawing():
+    print("event")
     drawing_file_path = 'static/img/drawing_result/'+drawing.split('.')[0]+'_fake.png'
     return send_file(drawing_file_path, mimetype='image/jpeg')
 
@@ -109,6 +123,7 @@ def save_image(image_data, filename):
     
     # 이미지 파일로 저장
     file_path = 'server/static/img/upload_img/'+filename
+    print(file_path)
     with open(file_path, 'wb') as f:
         f.write(image_data)
     shutil.copy('server/static/img/upload_img/' + filename, 'pytorch-CycleGAN-and-pix2pix-master/datasets/elevenTest/test')
