@@ -3,7 +3,7 @@
                batch_size: 1                             
           checkpoints_dir: ./checkpoints                 
                 crop_size: 256                           
-                 dataroot: datasets/hneq5amm             	[default: None]
+                 dataroot: datasets/tsvdl14x             	[default: None]
              dataset_mode: single                        
                 direction: BtoA                          	[default: AtoB]
           display_winsize: 256                           
