@@ -3,7 +3,7 @@
                batch_size: 1                             
           checkpoints_dir: ./checkpoints                 
                 crop_size: 256                           
-                 dataroot: datasets/e3g3830e             	[default: None]
+                 dataroot: ./pytorch-CycleGAN-and-pix2pix-master/datasets/nuxbl2yl	[default: None]
              dataset_mode: single                        
                 direction: BtoA                          	[default: AtoB]
           display_winsize: 256                           

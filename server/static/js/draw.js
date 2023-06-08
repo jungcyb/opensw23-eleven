@@ -34,9 +34,6 @@ export const upHandler = (event) => {
 
 export const reset = (event) => {
 	ctx.clearRect(0, 0, 256, 256);
-};
-
-export const captureHandler = (evnet) => {
-	const img = document.getElementById('mycanvas').toDataURL('image/png');
-	console.log(img);
+	ctx.fillStyle = '#ffffff';
+	ctx.fillRect(0, 0, 256, 256);
 };

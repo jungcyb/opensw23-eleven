@@ -43,6 +43,10 @@ test/data/legacy_serialized.pt
 *~
 .idea
 
+*.png
+!datasets\elevenTest\test\*.jpg
+!datasets\elevenTest\test\*.png
+
 #Ignore Wandb
 wandb/
 
