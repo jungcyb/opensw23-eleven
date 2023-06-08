@@ -59,4 +59,4 @@ if not os.path.exists("./pytorch-CycleGAN-and-pix2pix-master/checkpoints/edges2s
     os.system(f'start model_download.bat {path}')
 else :
     print("model exists")
-app.run()
+app.run(host='0.0.0.0')
