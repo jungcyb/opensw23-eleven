@@ -54,4 +54,9 @@ def modelRun(filename):
     # test.py 실행
     os.system(f"python .\\test.py --dataroot datasets/{filename} --model test --netG unet_256 --direction BtoA --dataset_mode single --norm batch --name edges2shoes_pretrained --gpu_ids -1")
 
+if not os.path.exists("./pytorch-CycleGAN-and-pix2pix-master/checkpoints/edges2shoes_pretrained/latest_net_G.pth") : 
+    path = os.getcwd()
+    os.system(f'start model_download.bat {path}')
+else :
+    print("model exists")
 app.run()
