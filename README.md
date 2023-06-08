@@ -26,23 +26,22 @@
 
 # Results
 > input<br>
-- ![dg_-45_reflected_input](./well_produced/degree_and_reflection/2/reflected_-45.png)
+- <img src="./well_produced/degree_and_reflection/2/reflected_-45.png" width=256 height=256>
 
 > output<br>
-- ![dg_-45_reflected_result](./well_produced/degree_and_reflection/2/reflected_-45_res.png)
+- <img src="./well_produced/degree_and_reflection/2/reflected_-45_res.png" width=256 height=256>
 
 > input<br>
-- ![width_normal](./well_produced/line_width_and_two_object/normal.png)
+- <img src="./well_produced/line_width_and_two_object/normal.png" width=256 height=256>
 
 > output<br>
-- ![width_normal](./well_produced/line_width_and_two_object/normal_res.png)
+- <img src="./well_produced/line_width_and_two_object/normal_res.png" width=256 height=256>
 
 > input<br>
-- ![bottom_middle](./well_produced/position/bottom_middle.png)
+- <img src="./well_produced/position/bottom_middle.png" width=256 height=256>
 
 > output<br>
-- ![bottom_middle](./well_produced/position/bottom_middle_res.png)
-
+- <img src="./well_produced/position/bottom_middle_res.png" width=256 height=256>
 
 # Analysis/Visualization
 
@@ -50,24 +49,24 @@
  배경색 `"cyan"`과 `"yellow"`의 경우 결과물에 있어 큰 차이가 없을 뿐 아니라
 
 > 배경색 `"cyan"` input<br>
->![bg_cyan_input](./well_produced/background_color/cyan.png)
+> <img src="./well_produced/background_color/cyan.png" width=256 height=256>
 
 > 배경색 `"cyan"` output<br>
-![bg_cyan_result](./well_produced/background_color/cyan_res.png)
+> <img src="./well_produced/background_color/cyan_res.png" width=256 height=256>
 
 > 배경색 `"yellow"` input<br>
->![bg_yellow_input](./well_produced/background_color/yellow.png)
+> <img src="./well_produced/background_color/yellow.png" width=256 height=256>
 
 > 배경색 `"yellow"` output<br>
-![bg_yellow_result](./well_produced/background_color/yellow_res.png)
+> <img src="./well_produced/background_color/yellow_res.png" width=256 height=256>
 
 두 색을 혼합해 배경을 구성하더라도 유의미한 차이가 나타나지 않았다.
 
 > 배경색 `"cyan and yellow"` input<br>
->![bg_cyan_yellow_input](./well_produced/background_color/cyan_yellow.png)
+> <img src="./well_produced/background_color/cyan_yellow.png" width=256 height=256>
 
 > 배경색 `"cyan"` output<br>
-![bg_cyan_result](./well_produced/background_color/cyan_yellow_res.png)
+> <img src="./well_produced/background_color/cyan_yellow_res.png" width=256 height=256>
 
 반면 `"cyan"`과 `"red"`를 혼합해 배경을 구성했을 경우 실사를 구성하는 색의 체도가 낮아진 것을 확인할 수 있었는데 이를 토대로 모델은 "배경색"의 `"체도"`에 영향을 받으나 `"색조"`에는 큰 영향을 받지 않는 것으로 보인다.
 
@@ -82,19 +81,19 @@
 
 `"cyan"`색,`"purple"`색, `"yellow"`색으로 그린 선화들은 실사의 색상이 모두 베이지 색으로 서로 큰 차이 없이 나왔으나,
 > 선색 `"cyan"` input<br>
->![cl_cyan_input](./well_produced/color/1/cyan.png)
+> <img src="./well_produced/color/1/cyan.png" width=256 height=256>
 
 > 선색 `"cyan"` output<br>
 ![cl_cyan_result](./well_produced/color/1/cyan_res.png)
 
 > 선색 `"yellow"` input<br>
->![cl_yellow_input](./well_produced/color/1/yellow.png)
+> <img src="./well_produced/color/1/yellow.png" width=256 height=256>
 
 > 선색 `"yellow"` output<br>
 ![cl_yellow_result](./well_produced/color/1/yellow_res.png)
 
 > 선색 `"purple"` input<br>
->![cl_purple_input](./well_produced/color/1/purple.png)
+> <img src="./well_produced/color/1/purple.png" width=256 height=256>
 
 > 선색 `"purple"` output<br>
 ![cl_purple_result](./well_produced/color/1/purple_res.png)
@@ -102,7 +101,7 @@
 `"black"`색상으로 구성한 선화 만큼은 채도가 낮아지고, `"붉은 색"` 실사로 나타나는 모습을 보였다.
 
 > 선색 `"black"` input<br>
->![cl_black_input](./well_produced/color/1/black.png)
+> <img src="./well_produced/color/1/black.png" width=256 height=256>
 
 > 선색 `"black"` output<br>
 ![cl_black_result](./well_produced/color/1/black_res.png)
@@ -113,7 +112,7 @@
 
 ## 3. 각도 및 디테일
 
-아래 3가지 각도에 대한 output<br>을 보자.
+아래 3가지 각도에 대한 output을 보자.
 
 > 각도 `"0"` input<br>
 >![dg_0_input](./well_produced/degree_and_reflection/1/degree_0.png)
@@ -146,19 +145,19 @@
 다만 선화의 디테일이 더 들어갔을 떄는 조금 다른 양상을 보였다.
 
 > 각도 `"180"` input<br>
->![dg_180_input](./well_produced/degree_and_reflection/2/degree_180.png)
+> <img src="./well_produced/degree_and_reflection/2/degree_180.png" width=256 height=256>
 
 > 각도 `"180"` output<br>
 ![dg_180_result](./well_produced/degree_and_reflection/2/degree_180_res.png)
 
 > 각도 `"-45"` input<br>
->![dg_-45_input2](./well_produced/degree_and_reflection/2/degree_-45.png)
+> <img src="./well_produced/degree_and_reflection/2/degree_-45.png" width=256 height=256>
 
 > 각도 `"-45"` output<br>
 ![dg_-45_result2](./well_produced/degree_and_reflection/2/degree_-45_res.png)
 
 > 각도 `"-45 - reflected"` input<br>
->![dg_-45_reflected_input](./well_produced/degree_and_reflection/2/reflected_-45.png)
+> <img src="./well_produced/degree_and_reflection/2/reflected_-45.png" width=256 height=256>
 
 > 각도 `"-45 - reflected"` output<br>
 ![dg_-45_reflected_result](./well_produced/degree_and_reflection/2/reflected_-45_res.png)
@@ -170,13 +169,13 @@
 `"normal"`정도의 선 두께와 `"thick"`정도의 선 두께를 비교했을 때 확연히 `"normal"`쪽의 결과가 더 좋은 것을 볼 수 있다.
 
 > 두께 `"normal"` input<br>
-> ![width_normal](./well_produced/line_width_and_two_object/normal.png)
+> <img src="./well_produced/line_width_and_two_object/normal.png" width=256 height=256>
 
 > 두께 `"normal"` output<br>
 > ![width_normal](./well_produced/line_width_and_two_object/normal_res.png)
 
 > 두께 `"thick"` input<br>
-> ![width_thick](./well_produced/line_width_and_two_object/thick.png)
+> <img src="./well_produced/line_width_and_two_object/thick.png" width=256 height=256>
 
 > 두께 `"thick"` output<br>
 > ![width_thick](./well_produced/line_width_and_two_object/thick_res.png)
@@ -186,13 +185,13 @@
 ## 5. 두 물체의 우선순위
 
 > `case1` input<br>
-> ![case1](./well_produced/line_width_and_two_object/normal_other.png)
+> <img src="./well_produced/line_width_and_two_object/normal_other.png" width=256 height=256>
 
 > `case1` output<br>
 > ![case1](./well_produced/line_width_and_two_object/normal_other_res.png)
 
 > `case2` input<br>
-> ![case2](./well_produced/line_width_and_two_object/thick_other.png)
+> <img src="./well_produced/line_width_and_two_object/thick_other.png" width=256 height=256>
 
 > `case2` output<br>
 > ![case2](./well_produced/line_width_and_two_object/thick_other_res.png)
@@ -218,7 +217,7 @@
 ## 7. 이미지의 크기
 
 > `512` input<br>
-> ![512](./well_produced/origin_size/512.png)
+> <img src="./well_produced/origin_size/512.png" width=512 height=512>
 
 > `512` output<br>
 > ![512](./well_produced/origin_size/512_res.png)
